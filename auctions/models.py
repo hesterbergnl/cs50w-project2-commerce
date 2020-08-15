@@ -4,3 +4,9 @@ from django.db import models
 
 class User(AbstractUser):
     pass
+
+class AuctionItem():
+    pass
+    
+class Comments():
+    pass
