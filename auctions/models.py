@@ -5,11 +5,12 @@ from django.db import models
 class User(AbstractUser):
 	pass
 
-class Listings():
+class Listing():
 	title = models.CharField(max_length=100)
 	description = models.CharField(max_length=2000)
 	starting_bid = models.FloatField()
-	current_bid = models.FloatField()
 
 	def __str__(self):
 		return f"{self.title}: {self.current_bid}"
+
+class 
