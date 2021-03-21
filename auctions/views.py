@@ -3,13 +3,30 @@ from django.db import IntegrityError
 from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render
 from django.urls import reverse
-
+from .models import Listing
+from django.db.models import Max
 from .models import User
 
 
 def index(request):
-    return render(request, "auctions/index.html")
+    listings = Listing.objects.all()
+    return render(request, "auctions/index.html", {
+            "listings":listings
+        }) 
 
+def listing(request, listing_id):
+    listing = Listing.objects.get(id=listing_id)
+    comments = listing.comments.all()
+    #select the highest bid, get the correct value from dictionary
+    bid = listing.bids.all().aggregate(Max('bid')).get('bid__max')
+    #If no highest bid, set 0 to use the starting price
+    if(bid == None):
+        bid = 0
+    return render(request, "auctions/listing.html", {
+            "listing":listing,
+            "comments":comments,
+            "bid":bid
+        })
 
 def login_view(request):
     if request.method == "POST":

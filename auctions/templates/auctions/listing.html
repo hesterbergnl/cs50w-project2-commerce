@@ -1,0 +1,32 @@
+{% extends "auctions/layout.html" %}
+
+{% block body %}
+    <h1>{{ listing.title }}</h1>
+    <!-- Display the image -->
+    <img src="{{ listing.image.url }}" height=500px>
+    <!-- Display the current bid -->
+    <p><b>Current Bid: </b> 
+    	{% if listing.starting_bid > bid %}
+    		{{ listing.starting_bid }} 
+    	{% else %}
+    		{{ bid }}
+    	{% endif %}
+
+    </p>
+    <!-- Form used for inputting bids-->
+
+    <!-- List the description -->
+    <h3>Description:</h3>
+    <p>{{ listing.description }}</p>
+    <!-- List the category -->
+    <p><b>Category:</b> {{ listing.category }}</p>
+    
+    <h3>Comments:</h2>
+    {% for comment in comments %}
+    	<li>{{ comment }}</li>
+    {% empty %}
+    	<li>No Comments!</li>
+    {% endfor %}
+
+    <a href="{% url 'index' %}"> All Listings </a>
+{% endblock %}
